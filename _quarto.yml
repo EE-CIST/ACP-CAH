@@ -4,7 +4,7 @@ project:
 
 render:
       - index.qmd
-      - test.qmd
+      - intro.qmd
 
 website:
   title: "ACP-CAH"
@@ -12,7 +12,7 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - test.qmd
+      - intro.qmd
 
 format:
   html:
