@@ -1,0 +1,16 @@
+Code;Pays;Halieutique;Cacao;Café;Coton;Bauxite;Diamant;Or;Uranium;Gaz;Petrole
+BEN;Bénin;0;0;0;1;0;0;0;0;0;0
+BFA;Burkina Faso;0;0;0;1;0;0;0;0;0;0
+CPV;Cap-Vert;1;0;0;0;0;0;0;0;0;0
+CIV;Côte d'Ivoire;0;1;1;0;1;0;1;0;1;1
+GMB;Gambie;1;0;0;0;0;0;0;0;0;0
+GHA;Ghana;0;1;0;0;1;0;1;0;0;0
+GIN;Guinée;0;0;0;0;1;1;1;1;0;1
+GNB;Guinée-Bissau;1;0;0;0;1;0;0;0;0;1
+LBR;Libéria;0;0;0;0;0;1;1;0;0;0
+MLI;Mali;0;0;0;1;1;0;1;0;0;0
+NER;Niger;0;0;0;0;0;0;1;1;1;1
+NGA;Nigeria;0;0;0;0;0;0;1;1;1;1
+SEN;Sénégal;0;0;0;1;0;0;0;0;1;1
+SLE;Sierra Leone;0;1;1;0;0;1;1;0;0;0
+TGO;Togo;0;1;1;1;0;0;0;0;0;0
