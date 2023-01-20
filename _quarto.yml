@@ -1,0 +1,26 @@
+project:
+  type: website
+  output-dir: docs
+
+render:
+      - index.qmd
+      - test.qmd
+
+website:
+  title: "ACP-CAH"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - test.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+includes:
+  after_body: js/custom_javascript.html
+
+
