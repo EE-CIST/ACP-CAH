@@ -61,6 +61,7 @@ don<-base %>% filter(Produit %in% c("Lait - Excl Beurre","Boissons Alcooliques")
                      Année == "2020") %>%
               select(Zone, Produit,Valeur ) %>%
               dcast(formula = Zone~Produit) 
+don<-don[,c(1,3,2)]
 names(don)<-c("region","Lait","Alcool")
 code<-as.factor(don$region)
 levels(code) <- c("AFR_Sud","AFR_Centre", "AFR_Ouest","AFR_Est","AFR_Nord","EUR_Sud","EUR_Ouest","EUR_Est","EUR_Nord")
@@ -81,10 +82,10 @@ kbl(don, caption = "Consommation moyenne de lait et d'alcool en Europe et en Afr
 Pour gagner en abstraction, nous désignerons par la suite les variables sous la simple forme $X$ et $Y$ et nous donnerons aux individus qui les composent un simple identifiant numérique correspondant à leur numéro de ligne : $1...9$. Nous obtenons ainsi un tableau que l'on appellera *acp.data* et qui est de type `data.frame`:
 
 ```{r, echo=T}
-X<-don$Alcool
-Y<-don$Lait
+Y<-don$Alcool
+X<-don$Lait
 acp.data<-data.frame(X,Y)
-kable(acp.data, caption = "Données")
+kable(acp.data, caption = "Données", row.names = T)
 ```
 
 On peut commencer par le visualiser avec la fonction `plot()`

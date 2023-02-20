@@ -91,14 +91,14 @@ kable(addmargins(tabres), caption = "Résidus absolus (Nij - N*ij)", digits=1)
 
 ```{r}
 tabchi2<-((tab-tabest)**2)/tabest
-kable(addmargins(tabchi2), caption = "Résidus absolus (Nij - N*ij)", digits=1)
+kable(addmargins(tabchi2), caption = "Chi_2 = (Nij-N*ij)2 / N*ij", digits=1)
 ```
 
 ### Contributions au chi2
 
 ```{r}
 tabchi2ctr<-100*tabchi2/sum(tabchi2)
-kable(addmargins(tabchi2ctr), caption = "Résidus absolus (Nij - N*ij)", digits=2)
+kable(addmargins(tabchi2ctr), caption = "% du chi_2 total du tableau (contribution)", digits=2)
 ```
 
 ## CORRELATIONS
@@ -152,7 +152,7 @@ cos2_3<-afc$col$cos2[,3]
 
 df<-data.frame(coo_1,ctr_1,cos2_1,coo_2,ctr_2,cos2_2,coo_3,ctr_3,cos2_3)
 kable(df,digits = 2,
-      caption = "Relations entre lignes et facteurs"
+      caption = "Relations entre colonnes et facteurs"
       )
 ```
 
