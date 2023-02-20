@@ -25,7 +25,7 @@ Elles peuvent être complétées par une classification ou une analyse discrimin
 
 Ce module s’organise en deux parties : d’une part faire le point sur les généralités de l’analyse factorielle et d’autre part présenter chaque méthode d’analyse et les données possibles pour sa mise en œuvre. 
  
-### Références bibliographiques 
+### Bibliographie 
 
 - **DENIS D. J., 2020,** *Univariate, bivariate, and multivariate statistics using R: quantitative tools for data analysis and data science*, John Wiley & Sons.
 - **DUMOLARD Pierre**, *Analyse multivariée de données géographiques* 

@@ -1,0 +1,30 @@
+---
+title: "AFC sur les langue du Bénin en 2002"
+author: "France Guérin-Pace"
+date: '2023-01-09'
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr)
+```
+
+## Introduction
+
+Ce programme sert pour ..
+
+
+## Préparation des données
+
+On charge le fichier et on affiche les premières et dernières lignes avec le programme ci-dessous
+
+```{r}
+don <- read.csv("LAN-BENIN-2013/LAN-BENIN-2002-NIV1.csv", sep=";")
+
+kable(head(don))
+kable(tail(don))
+```
+

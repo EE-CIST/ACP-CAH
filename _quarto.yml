@@ -4,10 +4,11 @@ project:
 
 render:
       - index.qmd
+      - Cours-AFC.qmd
       - Cours-ACP.qmd
-      - Cours-Classif.qmd
+      - Cours-CAH.qmd
       - Exo-CEDEAO.qmd
-
+      - Exo-AFRIQUE.qmd
 
 website:
   title: "EXP3 : Stat. Multivariée"
@@ -15,9 +16,11 @@ website:
     left:
       - href: index.qmd
         text: Home
+      - Cours-AFC.qmd
       - Cours-ACP.qmd
-      - Cours-Classif.qmd
+      - Cours-CAH.qmd
       - Exo-CEDEAO.qmd
+      - Exo-AFRIQUE.qmd
 
 format:
   html:

@@ -1,5 +1,9 @@
 ---
 title: "EXO : CEDEAO"
+author: "Claude Grasland, France Guérin-Pace, Ané Landry Tanoh "
+format: html
+embed-resources: true
+bibliography: references.bib
 ---
 
 
