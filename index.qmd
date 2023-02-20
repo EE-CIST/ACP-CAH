@@ -1,4 +1,39 @@
 ---
 title: "Home"
+author: "Claude Grasland, France Guérin-Pace, Ané Landry Tanoh "
+format: html
+embed-resources: true
+bibliography: references.bib
 ---
 
+Ce module portant sur le traitement ou l’analyse des données statistiques et géographiques multidimensionnelles. Il cible la plupart des chercheurs et étudiants dans le domaine des sciences économiques, sociales ou humaines. Il se fera sous la forme de travaux dirigées (TD) avec des exercices pratiques de traitement des données sur le logiciel R. La partie théorique de ce module pourra se faire en 3 heures de temps au minimum et l’application des exercices en 2 heures au minimum.   
+
+### Prérequis 
+
+- Avoir une connaissance des notions fondamentales ou basiques de la statistique descriptive 
+- connaissance de la nature des variables à analyser et des modalités associées : il peut s’agir de variables continues, de variables nominales ou de catégories dans le cas des tableaux de contingence. Les lignes peuvent être des individus ou des catégories.
+
+### Résumé
+
+L’analyse exploratoire des variables qualitatives et quantitative grâce à la statistique descriptive est certes indispensable mais elle reste tout à fait insuffisante. Cette analyse univariée ou bivariée laisse de côté les liaisons multiples qui peuvent exister entre plusieurs variables. Cela nécessite donc une analyse des données tenant compte de leur caractère multidimensionnel en recourant à l’analyse factorielle qui est un ensemble de méthodes. Ces méthodes permettent de structurer et synthétiser les informations sur les individus et les variables sous forme de représentations graphiques ou plans factoriels. Elles ont pour objet de réduire les dimensions des tableaux de données de façon à représenter les associations entre individus et entre variables dans des espaces de faibles dimensions. Les principales méthodes de l’analyse factorielle sont : 
+- L’analyse en composantes principales (ACP) pour des variables quantitatives (ou encore des variables pour lesquels la notion de moyenne a un sens) 
+- L’analyse factorielle des correspondances simples (AFC) pour deux variables qualitatives uniquement 
+- L’analyse des correspondances multiples (ACM) pour plusieurs variables qualitatives.
+- L’analyse factorielle multiple (AFM) pour les tableaux dans lesquels les variables sont structurées en groupes. 
+
+Elles peuvent être complétées par une classification ou une analyse discriminante dont le but sera de faire apparaître des groupes d’individus homogènes vis-à-vis des variables analysées. Ces dernières techniques sont des méthodes explicatives. 
+
+Ce module s’organise en deux parties : d’une part faire le point sur les généralités de l’analyse factorielle et d’autre part présenter chaque méthode d’analyse et les données possibles pour sa mise en œuvre. 
+ 
+### Références bibliographiques 
+
+- **DENIS D. J., 2020,** *Univariate, bivariate, and multivariate statistics using R: quantitative tools for data analysis and data science*, John Wiley & Sons.
+- **DUMOLARD Pierre**, *Analyse multivariée de données géographiques* 
+- **ETOUDJI K.A., 2015,** *De la théorie des enquêtes au traitement des données : Initiation aux logiciels statistiques*, Université de Lomé.
+- **LEBART L., MORINEAU A., PIRON M., 1995,** *Statistique exploratoire multidimensionnelle*, Dunod. 
+- **SANDERS L. 1989,** *L’analyse des données appliquées à la géographie*, Montpellier 
+
+### Webographie
+
+- [FactoMineR : ](http://factominer.free.fr/index_fr.html) Site web de référence pour le package R *FactoMineR*. Mais qui comporte également des éléments de cours très précieux et des exemples. Le tout en français !!!
+    

@@ -18,9 +18,6 @@ library(FactoMineR)
 library(factoextra)
 ```
 
-## OBJECTIFS D'APPRENTISSAGE
-
-
 
 
 
@@ -387,6 +384,128 @@ Indiquons brièvement sans nous y attarder pour l'instant les résultats d'une A
 acp<-PCA(tab[,2:3],graph = F)
 cah<-HCPC(acp,nb.clust = 2)
 ```
+
+
+## k DIMENSIONS
+
+Nous nous plaçons finalement das le cas général d'un tableau de dimension quelconque où $n$ individus $1...i...n$ sont décrits par $k$ variables $1...j..k$. Nous prenons à titre d'exemple le tableau des régimes alimentaires de 9 régions d'Europe et d'Afrique décrits par 6 variables mesurant les apports alimentaires en kCal/pers/jour (source : FAO, 2020).
+
+```{r}
+don<-readRDS("fao/exemple2.RDS")
+
+rownames(don)<-paste0(substr(rownames(don),1,2),substr(rownames(don),4,6))
+
+kbl(don, caption = "Consommation alimentaire en kCal/pers/jou (tableau brut)",digits=2)
+
+```
+
+Nous décidons de standardiser le tableau afin de faire jouer le même rôle à chacune des six variables : 
+
+```{r}
+don<-scale(don)
+kbl(don, caption = "Consommation alimentaire en kCal/pers/jou (tableau standardisé",digits=2)
+```
+### Matrice de distance
+
+Nous souhaitons utiliser le critère de Ward donc nous allons mesurer les dissimilarités entre régions à l'aide du carré de la distance euclidienne, c'est-à-dire de la *variance* (où si l'on préfère de l'*inertie*) des individus dans l'espace à cinq dimensions constitué par nos variables.
+
+```{r}
+d_Euc2<-as.matrix(dist(don, upper=T))
+d_Euc2<-addmargins(d_Euc2, FUN=sum,margin = 1)
+d_Euc2<-addmargins(d_Euc2, FUN=sum,margin = 2)
+kable(d_Euc2, digits=1)
+```
+
+Ce tableau nous permet de mesurer les dissimilarités entre les deux régions que notre cerveau serait incapable de visualiser dans un espace à cinq dimensions. Pour le critère considéré on peut par exemple remarquer :
+
+- que les deux régions les plus ressemblantes sont l'Europe de l'Ouest et l'Europe du Nord ($D_{i,j}^2 = 1.2$)
+- que les deux régions les plus dissemblantes sont l'Europe de l'Ouest et l'Afrique Centrale ($D_{i,j}^2 = 5.5$)
+- que la région la plus proche de toutes les autres est l'Europe de l'Est ($\sum_{j=1}^n {D_{i,j}^2} = 21.3$})
+- que la région la plus éloignée de toutes les autres est l'Afrique Centrale ($\sum_{j=1}^n {D_{i,j}^2} = 36.1$})
+
+### Résultats de l'ACP normée
+
+On reprend ici sans les commenter en détail les résultats de l'ACP normée qui a été effectuée sur ce tableau.
+
+```{r}
+acp<-PCA(don)
+```
+
+Les deux premiers axes de l'ACP résument respectivement 60.79% et 25.73% de la variance (l'inertie) du nuage de points soit un total de 85.52% de l'information. La visualisation de la position des régions dans ce plan factoriel fournit donc une assez bonne approximation des dissimilarités entre les régions et confirme nos observations précédentes sur les régions les plus proches et les plus éloignées.
+
+
+
+
+On doit toutefois éviter de tirer des conclusions trop rapides puisqu'environ 15% de l'information est contenue dans les axes factoriels suivant. On peut s'en rendre compte en examinant les corrélations des variables et les coordonnées des individus sur les axes factoriels 3 et 4. Ces derniers mettent en valeur un certain nombre de propriétés des régions en ce qui concerne la part respective des consommations d'huile, de sucre et de produits divers, toutes choses égales quant aux consommations de viandes, céréales ou légumes qui ont déjà été prises en compte par les deux premiers axes. 
+
+```{r}
+plot.PCA(acp,axes = c(3,4),choix ="var")
+plot.PCA(acp,axes = c(3,4),choix ="ind")
+```
+
+
+
+Cela signifie que certaines différences entre les régions ne seraient pas visibles si l'on s'en tenait aux résultats fournis par les deux premières composantes de l'ACP.
+
+### Résultats de la CAH
+
+L'intérêt de la CAH (critère de Ward) est donc précisément de fournir une vision complète des proximités entre les individus en tenant compte de toute l'information et pas seulement de celle qui est fournie par les premiers axes factoriels de l'ACP. 
+
+```{r}
+cah<-HCPC(acp, nb.clust = 3, graph=F,description = T)
+plot.HCPC(cah,choice = "tree",title = "CAH en trois classes",)
+```
+
+### Combien de classes ?
+
+L'arbre de classification a été ici coupé en trois classes de façon à opérer le meilleur compromis possible entre deux exigences contradictoires :
+
+1. conserver le maximum d'information
+2. résumer en un miniumum de classes
+
+Pour bien comprendre la contradiction, on peut considérer deux cas limites :
+
+- si nous avions fait 9 classes (autant que d'individus), nous aurions certes conseré toute l'information mais nous n'aurions effectué aucun résumé.
+- si nous avions fait une seule classe, nous aurions résumé au mieux l'information mais nous n'aurions rien appris.
+
+Le choix du nombre de classe est donc toujours une question délicate qui demande une part d'intuition. On peut toutefois s'aider du tableau et de l'histogramme des quantités d'inertie (de variance) que l'on aura pris en compte selon que l'on choisit 2, 3 ou 4 classes :
+
+```{r}
+plot.HCPC(cah, choice = "bar")
+```
+Le principe général consiste à couper l'arbre après un "saut" dans l'histogramme. On voit ici que le saut principal se produit après la deuxième barre de l'histogramme ce qui signifie qu'une partition en 3 classes est un bon choix. Mais on aurait également pu retenir une partition en deux classes ou quatre classes.
+
+### Profil des classes
+
+Une fois établies nos classes, il faut apprendre à les interpréter en repérant ce qui les caractérise. Les différents logiciels de statistiques offrent des aides à l'interprétation qui seront vues en TD. Nous nous bornons donc juste ici à indiquer à titre d'exemple les aides fournies par FactoMineR :
+
+```{r}
+cah$desc.var
+
+tabres<-cah$data.clust
+plot.catdes(catdes(tabres,7,proba = 1),level = 1,barplot = T)
+```
+
+Les résultats et le graphique ci-dessus nous indiquent que :
+
+- la *classe 1* regroupe des régions qui consomment significativement plus de légumes et significativement moins d'huiles, d'animaux et de sucre que les autres.
+- la *classe 2* regroupe des régions qui consomment significativement plus de céréales que les autres.
+- la *classe 3* regroupe des régions qui consomment significativement plus d'animaux, de produits divers, d'huile et de sucre que les autres
+
+
+### Lien entre ACP et CAH
+
+on peut finalement relier ACP et CAH en superposant l'arbre de classification sur le plan factoriel des axes 1 et 2.
+
+```{r}
+plot.HCPC(cah,choice = "3D.map",)
+```
+
+On peut alors constater que l'opposition entre les classes 1 et 3 correspond aux différences exprimées par l'axe 1 entre pays à forte consommation de légume et pays à forte consommation de viandes, huiles, sucres et produit divers. Quant à la classe 2, elle se démarque principalement sur l'axe 2 qui correspond à une forte part de céréales dans le régime alimentaire et des niveaux proches de la moyenne sur les autres critères. 
+
+
+
+
 
 
 
