@@ -4,9 +4,9 @@ project:
 
 render:
       - index.qmd
-      - ACP-Cours.qmd
-      - CAH-Cours.qmd
-      - cedeao.qmd
+      - Cours-ACP.qmd
+      - Cours-Classif.qmd
+      - Exo-CEDEAO.qmd
 
 
 website:
@@ -15,9 +15,9 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - ACP-Cours.qmd
-      - CAH-Cours.qmd
-      - cedeao.qmd
+      - Cours-ACP.qmd
+      - Cours-Classif.qmd
+      - Exo-CEDEAO.qmd
 
 format:
   html:
