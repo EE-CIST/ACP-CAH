@@ -6,6 +6,7 @@ render:
       - index.qmd
       - ACP-Cours.qmd
       - CAH-Cours.qmd
+      - cedeao.qmd
 
 
 website:
@@ -16,6 +17,7 @@ website:
         text: Home
       - ACP-Cours.qmd
       - CAH-Cours.qmd
+      - cedeao.qmd
 
 format:
   html:
