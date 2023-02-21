@@ -1,0 +1,200 @@
+---
+title: "COURS : ACM"
+author: "Ané Landry Tanoh"
+format: html
+embed-resources: true
+bibliography: references.bib
+---
+
+```{r, echo=FALSE, message =F, warning=F,error=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr,quietly = T,warn.conflicts = T)
+library(dplyr,quietly = T,warn.conflicts = T)
+#library(reshape2,quietly = T,warn.conflicts = T)
+#library(ggplot2,quietly = T,warn.conflicts = T)
+#library(kableExtra)
+library(FactoMineR)
+```
+
+
+## Données
+
+### Fichier original
+
+On charge un tableau issu de la thèse d'Ané Tanoh Landry 
+
+```{r landry1, fig.subcap="Source : Ané Tanoh Landry, 2018"}
+don<-readRDS("survey_landry/Landry.RDS")
+kable(head(don),caption = "Tableau de données original")
+```
+
+### Sélection et recodage
+
+```{r landry2, fig.subcap="Source : Ané Tanoh Landry, 2018"}
+names(don) <- c(
+"fns_N" ,                
+"fns_O"  ,               
+"reg_Bag" ,              
+"reg_Fol"  ,              
+"reg_Kab"   ,        
+"reg_Por"    ,             
+"mil_Urb"     ,          
+"mil_Rur"      ,          
+"sex_Mas"       ,    
+"sex_F"          ,  
+"rel_San"     ,
+"rel_Cat"       ,  
+"rel_Mus"        ,   
+"rel_Ani"         , 
+"rel_Aut"   ,
+"ins_San"    ,   
+"ins_Pri"     ,      
+"ins_Sec"      ,   
+"ins_Sup"       ,   
+"men_Mon"       ,    
+"men_Pl2",
+"men_Pl4",
+"men_Aut" , 
+"tra_O"     ,       
+"tra_N"      ,      
+"mnq_O"       ,     
+"mnq_N"        ,    
+"aid_O"         ,   
+"aid_N"          ,  
+"eco_O"           ,     
+"eco_N" 
+)
+
+kable(head(don), caption = "Tableau de données recodées")
+```
+
+
+
+### Dictionnaire des variables 
+
+- "fns_N"  : ?               
+- "fns_O"   : ?    
+
+- "reg_Bag"  : région de Bagoué            
+- "reg_Fol"  : région de Folon              
+- "reg_Kab"  : région de Kabadouhou       
+- "reg_Por"  : région de Poro 
+
+- "mil_Urb"  : milieu urbain             
+- "mil_Rur"  : milieu rural  
+
+- "sex_Mas"   : sexe masculin       
+- "sex_F"     : sexe féminin
+
+- "rel_San"   : sans religion 
+- "rel_Cat"   : religion catholique      
+- "rel_Mus"   : religion musulmane        
+- "rel_Ani"   : religion animiste       
+- "rel_Aut"   : autre religion
+
+- "ins_San"    : sans instruction   
+- "ins_Pri"    : instruction primaire      
+- "ins_Sec"    : instruction secondaire     
+- "ins_Sup"    : instruction supérieure 
+
+- "men_Mon"    : ménage monogae        
+- "men_Pl2"    : ménage polygame à 2 épouses
+- "men_Pl4"    : ménage polygame à 4 épouses
+- "men_Aut"    : autre type de ménage
+
+- "tra_O"      : travaux au sein de la famille - Oui     
+- "tra_N"      : travaux au sein de la famille - Non  
+
+- "mnq_O"      : Manque de moyens financiers - Oui      
+- "mnq_N"      : Manque de moyens financiers - Non
+
+- "aid_O"      : Aide familiale (petit commerce, apprentissage) - Oui     
+- "aid_N"      : Aide familiale (petit commerce, apprentissage) - Non     
+
+- "eco_O"      : Disposez-vous d'une école dans votre localité - Oui         
+- "eco_N"      : Disposez-vous d'une école dans votre localité - Non  
+
+### Résumé des fréquences
+
+
+```{r tab2, fig.subcap="Source : Ané Tanoh Landry, 2018"}
+eff<-apply(don,2,sum)
+pct<-100*apply(don,2,mean)
+res<-data.frame(eff,pct)
+kable(res, digits=2, names = c("Effectif","Fréquence (en %)", caption = "Tableau des fréquences de modalités"))
+```
+
+
+
+
+
+
+## Analyse des Correspondances Multiples (ACM)
+
+Elle est facile à réaliser à l'aide de la fonction **CA()** du package`FactomineR`appliquée au tableau disjonctif complet
+
+```{r}
+acm<-CA(don,graph = F)
+```
+
+### Valeurs propres
+
+```{r}
+barplot(acm$eig[1:10,2],ylab = "% information", main="Hiérarchie des Facteurs",cex.axis = 0.7)
+kable(acm$eig[1:10,],
+      col.names = c("Valeur propre", "% variance", "% variance cumulée"),
+      digits=2,
+      caption = "Tableau des valeurs propres")
+```
+
+### Coordonnées et contribution des variables aux axes
+
+```{r}
+coo_1<-acm$col$coord[,1]
+coo_2<-acm$col$coord[,2]
+coo_3<-acm$col$coord[,3]
+coo_4<-acm$col$coord[,4]
+ctr_1<-acm$col$contrib[,1]
+ctr_2<-acm$col$contrib[,2]
+ctr_3<-acm$col$contrib[,3]
+ctr_4<-acm$col$contrib[,4]
+
+
+df<-data.frame(coo_1,ctr_1,coo_2,ctr_2,coo_3,ctr_3,coo_4,ctr_4)
+kable(df,digits = 2,
+      caption = "Coordonnées et contributions des variables aux axes 1-4"
+      )
+```
+
+
+### Graphiques des variables
+
+```{r}
+plot.CA(acm,choix = "CA",invisible = "row",cex=0.7,title = "Plan 1-2")
+```
+```{r}
+plot.CA(axes = c(3,4), acm,choix = "CA",invisible = "row",cex=0.7,title = "Plan 3-4")
+```
+
+
+
+### Graphiques des individus
+
+```{r}
+plot.CA(acm,choix = "CA",invisible = "col",cex=0.3,pch=20)
+```
+
+```{r}
+plot.CA(acm,choix = "CA",invisible = "col",cex=0.3,pch=20,axes = c(3,4))
+```
+
+## Classification Ascendante Hiérarchique (CAH)
+
+On peut poursuivre l'analyse en réalisant une classificiation des départements ou des langues en fonction de leur ressemblance selon le critère de Ward.
+
+
+```{r}
+CAH_row<-HCPC(acm,nb.clust = 6,cluster.CA = "rows")
+CAH_row$desc.var
+
+```
