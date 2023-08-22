@@ -17,14 +17,18 @@ library(kableExtra)
 
 ## OBJECTIFS D'APPRENTISSAGE
 
+
+
+## Introduction
+
+Les objectifs de ce cours sont de 
+
 -   Comprendre la nature de l'analyse en composantes principales et son utilité pratique
 -   savoir exécuter et interpréter une analyse de composants dans R en utilisant les fonctions R-base *prcomp()* et *princomp()*.
 -   savoir tracer des matrices de corrélation entre les variables pour évaluer l'ampleur de leur redondance.
 -   Savoir donner un sens concret aux facteurs dérivés de l'ACP.
 
-## Introduction
-
--   **N.B. Cette introduction est directement adaptée du chapitre 10 de @denis2020, pp. **
+-   **N.B. Cette introduction à l'ACP est directement adaptée du chapitre 10 de @denis2020, pp. **
 
 L'**analyse en composantes principales**, ou « ACP » en abrégé, est une technique de réduction des données utilisée pour transformer la variance d'un ensemble de *p* variables en moins de *p* dimensions. L'ACP traditionnelle suppose que les variables sont de nature quantitative continue.
 
@@ -42,7 +46,7 @@ Dans le graphique, les axes d'origine sont A1 et A2. Les "nouveaux" axes après 
 
 Par conséquent, nous pouvons voir que l'ACP a effectué une rotation telle que les nouveaux axes optimisent certaines fonctions des données. Quelle fonction est maximisée ? Comme nous le verrons, la rotation se produit de telle sorte que la première composante représente autant de variance que possible dans les variables d'origine, tandis que la seconde composante rend compte autant que possible de la variance des variables d'origine, **mais sous réserve du fait qu'elle est orthogonale à la première composante**. Remarquez que sur la figure, les axes sont perpendiculaires les uns aux autres, ce qui revient à dire qu'ils sont à 90°. C'est la condition d'orthogonalité.
 
-## PRINCIPES DE L'ACP 
+## Principes statistiques de l'ACP
 
 -   **N.B. Cette section est directement adaptée du chapitre 10 de @denis2020 mais en modifiant l'exemple retenu par l'auteur**
 
@@ -448,7 +452,7 @@ D'un point de vue théorique, les deux méthodes peuvent apporter des résultats
 - **Commencer par une ACP normée lorsque les unités de mesure sont comparables** puis confronter dans un deuxième temps les résultats à ceux d'une ACP non normée et examiner les différences.
 
 
-## EXEMPLE D'APPLICATION
+## Interprétation des résultats
 
 ### Données
 

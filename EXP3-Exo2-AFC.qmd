@@ -75,7 +75,7 @@ tabtot<-100*tab/sum(tab)
 kable(addmargins(tabtot), caption = "Part du total (Nij/N..) en %", digits=1)
 ```
 
-## TEST DU CHI-2
+## Analyse bivariée
 
 Le tableau étant un tableau de contingence, on peut effectuer sur celui-ci un test du chi-2.
 
@@ -112,22 +112,6 @@ tabchi2ctr<-100*tabchi2/sum(tabchi2)
 kable(addmargins(tabchi2ctr), caption = "% du chi_2 total du tableau (contribution)", digits=2)
 ```
 
-## CORRELATIONS
-
-### Corrélations entre les profils colonnes
-
-```{r, fig.width=8, fig.height=8}
-library(GGally)
-ggpairs(as.data.frame(tabcol),title = "Analyse des corrélatins entre les colonnes",progress = F)
-```
-
-### Corrélations entre les profils lignes
-
-```{r, fig.width=8, fig.height=8}
-library(GGally)
-ggpairs(as.data.frame(t(tabrow)),title = "Analyse des corrélations entre les lignes", progress = F)
-```
-
 
 
 ## Analyse Factorielle des Correspondances (AFC)
@@ -138,7 +122,7 @@ Elle est facile à réaliser à l'aide de la fonction **CA()** du package`Factom
 afc<-CA(tab,graph = F)
 ```
 
-#### Valeurs propres
+### Valeurs propres
 
 ```{r}
 barplot(afc$eig[,2],ylab = "% information", main="Hiérarchie des Facteurs",cex.axis = 0.7)
@@ -148,7 +132,7 @@ kable(afc$eig,
       caption = "Tableau des valeurs propres")
 ```
 
-#### Relation des colonnes avec les facteurs
+### Relation des colonnes avec les facteurs
 
 ```{r}
 coo_1<-afc$col$coord[,1]
@@ -167,7 +151,7 @@ kable(df,digits = 2,
       )
 ```
 
-#### Relation des lignes avec les facteurs
+### Relation des lignes avec les facteurs
 
 ```{r}
 coo_1<-afc$row$coord[,1]
@@ -186,18 +170,18 @@ kable(df,digits = 2,
       )
 ```
 
-### Classification Ascendante Hiérarchique (CAH)
+## Classification Ascendante Hiérarchique (CAH)
 
 On peut poursuivre l'analyse en réalisant une classificiation des départements ou des langues en fonction de leur ressemblance selon le critère de Ward.
 
-#### Classification des colonnes
+### Classification des colonnes
 
 ```{r}
 CAH_col<-HCPC(afc,nb.clust = 3,cluster.CA = "columns")
 CAH_col$desc.var
 ```
 
-#### Classification des lignes
+### Classification des lignes
 
 ```{r}
 CAH_row<-HCPC(afc,nb.clust = 3,cluster.CA = "rows")

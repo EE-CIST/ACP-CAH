@@ -45,7 +45,7 @@ map <- st_read("DEV-AFRIC-2018/afrika_map.shp",quiet = T)
 
 ```
 
-## Liste des variables
+### Liste des variables
 
 ```{r}
 kable(meta, caption = "Défintion et source des variables")
@@ -53,7 +53,7 @@ kable(meta, caption = "Défintion et source des variables")
 
 
 
-## Paramètres principaux
+### Paramètres principaux
 
 On résume rapidement les variables retenues ce qui permet de constater qu'elles sont toutes complètes sauf la variable X1_PIB pour laquelle il y a trois valeurs manquantes.
 
@@ -66,7 +66,7 @@ summary(don)
 
 
 
-## ANALYSE EN COMPOSANTES PRINCIPALES
+## Analyse en composantes principales (ACP)
 
 
 
@@ -262,7 +262,7 @@ mf_layout(title = "Facteur 3 : ...???... ",
 **Commentaire** : *proposez une commentaire de la carte*
 
 
-## CLASSIFICATION ASCENDANTE HIERARCHIQUE
+## Classification ascendante hiérarchique (CAH)
 
 On effectue la classification sur le même tableau
 
