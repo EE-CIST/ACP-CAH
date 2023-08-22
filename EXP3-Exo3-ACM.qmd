@@ -1,0 +1,194 @@
+---
+title: "Exo3 : Scolarisation en Côte d'Ivoire en 2018 (ACM) "
+author: "Ané Landry Tanoh"
+format: html
+embed-resources: true
+bibliography: references.bib
+---
+
+```{r, echo=FALSE, message =F, warning=F,error=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(knitr,quietly = T,warn.conflicts = T)
+library(dplyr,quietly = T,warn.conflicts = T)
+#library(reshape2,quietly = T,warn.conflicts = T)
+#library(ggplot2,quietly = T,warn.conflicts = T)
+#library(kableExtra)
+library(FactoMineR)
+```
+
+
+## Introduction
+
+Le but de cet exercice est :
+
+1. De montrer les commandes R permettant de réaliser une Analayse  Correspondances Multiples (ACM) sous R
+2. D'apprendre à interpréter les résultats de cette ACM
+3. De discuter les prolongements possibles, notamment à travers des modèles de régression logistique ou multi-niveau.
+
+
+En préalable à cet exercice il est indispensable d'avoir bien maîtrisé les fondements théoriques des deux méthodes d'ACM et de CAH sur facteurs issus de l'ACM. Ces enseignements n'étant pas détaillé sur le présent site, nous recommandons de se reporter au MOOC de cours de François Husson en suivant les liens suivants
+
+- [Cours sur l'ACM](https://husson.github.io/MOOC_AnaDo/ACM.html)
+- [Cours sur la classification](https://husson.github.io/MOOC_AnaDo/classif.html)
+
+
+## Données
+
+### Fichier original
+
+On charge un tableau d'enquête issu de la thèse d'Ané Tanoh Landry portant sur la scolarisation des enfants dans quatre départements du Nord-Ouest de la Côte d'Ivoire en 2018. 
+
+```{r}
+include_graphics("img/tanoh001.png")
+```
+
+### Sélection des variables
+
+On retient 5 variables "*actives*" décrivant les modes de scolarisation des enfants et 4 variables "*supplémentaires*" décrivant le contexte familial et spatial du ménage. 
+
+```{r}
+include_graphics("img/tanoh002.png")
+```
+
+Le tableau à analyser par ACM se compose donc de 9 variables catégorielles comportant deux modalités ou plus.
+
+
+Les variables retenues sont organisées en trois groupes
+
+**A. Scolarisation**
+- TRA : les enfants travaillent (O/N)
+- MMQ : la famille manque de moyens financiers (O/N)
+- AID : les enfants aident la famille (O/N)
+- ECO : il y a une école dans la localité (O/N)
+- PAR : les enfants sont scolarisés de façon paritaire (O/N)
+
+**B. Contexte familial**
+- SEX : sexe du chef de méngae (H/F)
+- EDU : niveau d'éducation du chef de ménage (AUC = aucun, PRI = primaire, SEC = secondaire ou supérieur)
+
+**C. Contexte spatial**
+- MIL : milieu urbain ou rural (Urb/Rur)
+- DEP : Département (4 modalités)
+
+
+```{r}
+tab<-readRDS("survey_landry/extract.RDS")
+kable(head(tab))
+```
+
+### Résumé des variables
+
+```{r}
+tab<-readRDS("survey_landry/extract.RDS")
+summary(tab)
+```
+
+
+
+
+### Tableau disjonctif complet
+
+Pour pouvoir réaliser une ACM, on transforme ce tableau initial en *tableau disjonctif complet* pour réaliser une analyse des correspondances multiples. L'opération se fait de façon implicite dans FactoMineR mais on peut la rendre visible.
+
+
+```{r}
+acm <- MCA(tab, graph = FALSE)
+tabdis <- acm$call$Xtot
+head(tabdis)
+```
+
+Comme on peut le constater le tableau a conservé le même nombre de ligne (600) mais il comporte désormais plus de colonne puisque chaque variable initiale a été transformée en autant de variables booléennes (0/1) qu'elle avait de modalité. Par exemple, la variable TRA qui comportait deux modalités O et N est remplacée par les deux variables TRA_O et TRA_N. La variable EDU qui comportait trois modalités donne naissance à trois variables, etc. 
+
+
+
+## Analyse des Correspondances Multiples (ACM)
+
+Elle est facile à réaliser avec `FactomineR` et peut être obtenue de deux façons différentes (avec des résultats identiques)
+
+- en appliquant la fonction  **CA()** au tableau disjonctif complet
+ou
+- en executant directement la fonction **MCA()** sur le tableau des variables catégorielles. 
+
+
+```{r}
+
+acm1<-CA(tabdis, graph = F,  col.sup = 11:21)
+plot(acm1,invisible = "row", title = "AFC sur tableau disjonctif")
+
+acm2<-MCA(tab,graph = F,  quali.sup = 6:9)
+plot(acm2,invisible = "ind", title = "ACM sur tableau des variables")
+```
+
+Comme on peut le constater, les plans factoriels obtenus sont identiques quelle que soit la procédure choisie. On notera que les axes factoriels sont élaborés uniquement par la prise en compte des *variables actives* (TRA, MMF, AID, ECO, PAR). Les *variables supplémentaires* qui décrivent le contexte familial (SEX, EDU) ou spatial (DEP, MIL) sont projetées dans le plan des variables actives ce qui permet de voir leur proximité ou leur opposition avec celles-ci. Mais elles n'ont aucune influence sur la constitution des axes factoriels de l'ACM.
+
+- **N.B.** : Les praticiens de l'ACM ne sont pas tous d'accord sur la stratégie à adopter concernant les variables contextuelles. Certains préfèrent les ajouter en variables supplémentaires (solution adoptée ici) tandis que d'autres préfèrent les inclures avec les variables actives estimant qu'on peut ainsi mieux juger du phénomène social d'ensemble.  Une solution médiane consiste à comparer les deux types d'analyse et d'évaluer leurs apports respectifs à la comprhension du phénomène étudié. 
+
+### Valeurs propres
+
+```{r}
+barplot(acm1$eig[1:5,2],ylab = "% information", main="Hiérarchie des Facteurs",cex.axis = 0.7)
+kable(acm1$eig[1:5,],
+      col.names = c("Valeur propre", "% variance", "% variance cumulée"),
+      digits=2,
+      caption = "Tableau des valeurs propres")
+```
+
+Comme dans les autres types d'analyse factorielle, il est important d'examiner les valeurs propres des différents axes factoriels pour décider combien méritent d'être interprétés. Dans l'exemple retenu, les deux premiers axes factoriels ne résument "que" les deux tiers de l'information (65%) ce qui semble peu. Mais en pratique il s'agit d'un résultat très élevé pour une ACM où l'éclatement des variables en modalités multiples conduit souvent à des scores beaucoup plus faibles. 
+
+
+### Coordonnées et contribution des variables aux axes
+
+```{r}
+coo_1<-acm1$col$coord[,1]
+coo_2<-acm1$col$coord[,2]
+
+ctr_1<-acm1$col$contrib[,1]
+ctr_2<-acm1$col$contrib[,2]
+
+
+
+df<-data.frame(coo_1,ctr_1,coo_2,ctr_2)
+kable(df,digits = 2,
+      caption = "Coordonnées et contributions des variables aux axes 1-4"
+      )
+```
+
+L'interprétation des axes est ici plus complexe que dans le cadre d'une ACP puisque les variables catégorielles initiales ont été éclatées en plusieurs variables booléennes. Il est donc essentiel de bien prendre en compte les contributions de chaque modalité d'une variable pour juger de son rôle par rapport à un axe factoriel.
+
+- **L'axe 1** est ainsi déterminée principalement par les variables AID, MMF et PAR. Il oppose schématiquement des ménages où les enfants ne travaillent pas, n'aident pas la  famille et sont scolarisés de façn paritaire à ceux qui présentent les caractéristiques inverse. On devine aisément que cette première dimension oppose des familles urbaines et aisées à des familles pauvres et rurales, ce qui sera confirmé par l'étude des variables supplémentaires. 
+
+- **L'axe 2** est quant à lui essentiellement déterminé par la présence ou l'absence d'une école dans la localité, ce qui signifie que cette variable est globalement indépendante des autres facteurs présent sur l'axe 1. On en déduit que les inégalités sociales présentes sur le premier axe en recoupent pas directement les inégalités sptiales visibles sur ce deuxième axe. Le fait que la scolarisation soit paritaire ou non n'est pas lié à la présence d'une école. 
+
+
+### Plan factoriel des variables actives et supplémentaires.
+
+```{r}
+plot.CA(acm1,choix = "CA",invisible = "row",cex=0.7,title = "Plan 1-2")
+```
+
+Le plan factoriel des axes 1 et 2 permet de résumer les observations précédentes mais aussi d'y ajouter un certain nombre d'observations sur les variables contextuelles. On remarque ainsi que les chefs de ménage ayant des niveaux de diplôme élevé sont clairement associés positivement à l'axe 1 c'est-à-dire à l'absence de travail des enfants et à une scolarisation paritaire. Quant à la présence d'une école, elle semble davantage lié à la situation urbaine ou rurale mais aussi à une opposition entre le département de Bagoue (où la présence d'école est plus forte) et les trois autres départements (où les écoles sont moins fréquentes).
+
+## Prolongements possibles
+
+### Classification
+
+L'analyse pourrait se poursuivre par la réalisation d'une classification visant à regrouper les ménages précédant des profils similaires. Celle-ci pourrait facilement être mise en oeuvre à partir des axes factoriels de l'ACM, mettant en évidence 3 grands types de profils correspondant aux différentes positions dans le plan factoriel.
+
+```{r}
+CAH_row<-HCPC(acm1,nb.clust = 3,cluster.CA = "rows", )
+
+```
+
+Mais cette analyse serait plus pertinente si elle était menée sur un plus grand nombre d'attribut des ménages. Car on voit clairement ici que beaucoup de ménages occupent les mêmes positions et ont exactement les mêmes attributs. 
+
+### Régression logistique
+
+Une autre approche pourrait consister, à partir des résultats de l'ACM, à retenir une variable particulièrement digne d'intérêt et à chercher à prédire sa valeur en fonction d'autres variables associées. On pourrait typiquement essayer de modéliser la variable (PAR) éducation paritaire en fonction des variables dont nous avons vu qu'elles lui sont probablement associées positivement ou négativement.
+
+
+```{r}
+modlogit<-glm(data=tab,formula = PAR~TRA+MMF+AID+ECO+SEX+EDU+MIL+DEP, family = "binomial")
+summary(modlogit)
+```
+
+Confirmant les résultats de l'ACM, le modèle logit montre ici que parmi l'ensemble des variables retenues, seuls le niveau d'éducation du chef de ménage et le fait d'aider la famille ont un impact significatif sur le fait d'accorder une éducation paritaire aux filles et aux garçons. 

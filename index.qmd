@@ -6,34 +6,49 @@ embed-resources: true
 bibliography: references.bib
 ---
 
-Ce module portant sur le traitement ou l’analyse des données statistiques et géographiques multidimensionnelles. Il cible la plupart des chercheurs et étudiants dans le domaine des sciences économiques, sociales ou humaines. Il se fera sous la forme de travaux dirigées (TD) avec des exercices pratiques de traitement des données sur le logiciel R. La partie théorique de ce module pourra se faire en 3 heures de temps au minimum et l’application des exercices en 2 heures au minimum.   
+Ce module portant sur le traitement ou l'analyse des données statistiques et géographiques multidimensionnelles. Il cible la plupart des chercheurs et étudiants dans le domaine des sciences économiques, sociales ou humaines. Il se fera sous la forme de travaux dirigées (TD) avec des exercices pratiques de traitement des données sur le logiciel R. La partie théorique de ce module pourra se faire en 3 heures de temps au minimum et l'application des exercices en 2 heures au minimum.
 
-### Prérequis 
+### Prérequis
 
-- Avoir une connaissance des notions fondamentales ou basiques de la statistique descriptive 
-- connaissance de la nature des variables à analyser et des modalités associées : il peut s’agir de variables continues, de variables nominales ou de catégories dans le cas des tableaux de contingence. Les lignes peuvent être des individus ou des catégories.
+-   Avoir une connaissance des notions fondamentales ou basiques de la statistique descriptive
+-   connaissance de la nature des variables à analyser et des modalités associées : il peut s'agir de variables continues, de variables nominales ou de catégories dans le cas des tableaux de contingence. Les lignes peuvent être des individus ou des catégories.
 
-### Résumé
+### Objectifs
 
-L’analyse exploratoire des variables qualitatives et quantitative grâce à la statistique descriptive est certes indispensable mais elle reste tout à fait insuffisante. Cette analyse univariée ou bivariée laisse de côté les liaisons multiples qui peuvent exister entre plusieurs variables. Cela nécessite donc une analyse des données tenant compte de leur caractère multidimensionnel en recourant à l’analyse factorielle qui est un ensemble de méthodes. Ces méthodes permettent de structurer et synthétiser les informations sur les individus et les variables sous forme de représentations graphiques ou plans factoriels. Elles ont pour objet de réduire les dimensions des tableaux de données de façon à représenter les associations entre individus et entre variables dans des espaces de faibles dimensions. Les principales méthodes de l’analyse factorielle sont : 
-- L’analyse en composantes principales (ACP) pour des variables quantitatives (ou encore des variables pour lesquels la notion de moyenne a un sens) 
-- L’analyse factorielle des correspondances simples (AFC) pour deux variables qualitatives uniquement 
-- L’analyse des correspondances multiples (ACM) pour plusieurs variables qualitatives.
-- L’analyse factorielle multiple (AFM) pour les tableaux dans lesquels les variables sont structurées en groupes. 
+L'analyse exploratoire des variables qualitatives et quantitative grâce à la statistique descriptive est certes indispensable mais elle reste tout à fait insuffisante. Cette analyse univariée ou bivariée laisse de côté les liaisons multiples qui peuvent exister entre plusieurs variables. Cela nécessite donc une analyse des données tenant compte de leur caractère multidimensionnel en recourant à l'analyse factorielle qui est un ensemble de méthodes. Ces méthodes permettent de structurer et synthétiser les informations sur les individus et les variables sous forme de représentations graphiques ou plans factoriels. Elles ont pour objet de réduire les dimensions des tableaux de données de façon à représenter les associations entre individus et entre variables dans des espaces de faibles dimensions. Les principales méthodes de l'analyse factorielle sont : - L'analyse en composantes principales (ACP) pour des variables quantitatives (ou encore des variables pour lesquels la notion de moyenne a un sens) - L'analyse factorielle des correspondances simples (AFC) pour deux variables qualitatives uniquement - L'analyse des correspondances multiples (ACM) pour plusieurs variables qualitatives. - L'analyse factorielle multiple (AFM) pour les tableaux dans lesquels les variables sont structurées en groupes.
 
-Elles peuvent être complétées par une classification ou une analyse discriminante dont le but sera de faire apparaître des groupes d’individus homogènes vis-à-vis des variables analysées. Ces dernières techniques sont des méthodes explicatives. 
+Elles peuvent être complétées par une classification ou une analyse discriminante dont le but sera de faire apparaître des groupes d'individus homogènes vis-à-vis des variables analysées. Ces dernières techniques sont des méthodes explicatives.
 
-Ce module s’organise en deux parties : d’une part faire le point sur les généralités de l’analyse factorielle et d’autre part présenter chaque méthode d’analyse et les données possibles pour sa mise en œuvre. 
- 
-### Bibliographie 
+```{r, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE,comment = "",warning = FALSE,error = FALSE,message = FALSE)
+library(knitr)
+include_graphics("img/intro000.png")
+```
 
-- **DENIS D. J., 2020,** *Univariate, bivariate, and multivariate statistics using R: quantitative tools for data analysis and data science*, John Wiley & Sons.
-- **DUMOLARD Pierre**, *Analyse multivariée de données géographiques* 
-- **ETOUDJI K.A., 2015,** *De la théorie des enquêtes au traitement des données : Initiation aux logiciels statistiques*, Université de Lomé.
-- **LEBART L., MORINEAU A., PIRON M., 1995,** *Statistique exploratoire multidimensionnelle*, Dunod. 
-- **SANDERS L. 1989,** *L’analyse des données appliquées à la géographie*, Montpellier 
+### Organisation du cours et des exercices
 
-### Webographie
+Le module est organisé sous forme de trois sessions de cours et trois exercices :
 
-- [FactoMineR : ](http://factominer.free.fr/index_fr.html) Site web de référence pour le package R *FactoMineR*. Mais qui comporte également des éléments de cours très précieux et des exemples. Le tout en français !!!
-    
+-   **Cours 1 : Introduction** : Cette introduction à l'analyse multidimensionnelle permet de proposer une approche intuitive des objectifs des méthodes d'analyse factorielle et de classification à travers l'exemple pédagogique de la taille et du niveau de développement des 15 pays de la CEDEAO. Les questions statistiques sont volontairement survolées sans approfondissement.
+-   **Cours 2 : Analyses factorielles** : A travers l'exemple de l'analyse en composante principale (ACP), ce cours basé sur un très petoit tableau de données met en place les principes généraux de l'analyse factorielle entendue comme méthode de réduction des colonnes d'un tableau de données. Directement inspiré de l'ouvrage de @denis2020 il détaille les méthodes de construction des axes factoriels, leur interprétation, et la possibilité d'ajouter des indvidus ou variables supplémentaire.
+-   **Cours 3 : Classifications** : Reprenant le même tableau de données que le cours précédent, ce cours présente les bases des méthodes de classification en détaillant la construction d'une matrice de similarité/dissimilarité puis en montrant comment regrouper les individus à l'aide de méthodes itératives (k-means) ou hiérarchiques (Classification Ascendante Hiérarchique).
+-   **Exo 1 Application de l'ACP** : Ce premier exemple d'application porte sur le développement des pays africains en 2018 et montre comment l'ACP permet de mettre à jour à la fois des dimensions attendues (F1 = niveau global de développement) et d'autres moins prévisibles (F2 et F3) liées aux effets du climat ou aux crises politiques. Il est associé à une classification et une cartographie des résultats.
+-   **Exo 2 : Application de l'AFC** : Ce second exemple prend en entrée un tableau de contingence décrivant la distribution des langues par département au Bénin lors du recensement de 2013. Il permet de montrer le passage de la distance euclidienne à la distance du chi-2 dans la construction des axes factoriels et des classification. Il souligne les differences avec l'ACP, notamment du fait de la dualité de lecture des lignes et des colonnes propre à ce type de tableau.
+-   **Exo 3 : Application de l'ACM**: Ce dernier exemple montre comment on peut appliquer les méthodes d'analyse factorielle et de classification à un tableau de variables qualitatives (catégorielles) en les transformant en tableau disjonctif complet composé de 0 et de 1. Il permet de souligner la proximité de cette méthode avec l'AFC et de mettre en valeur la possibilité d'appliquer les méthodes d'analyse multidimensionnelles aux données d'enquête.
+-   Le **diaporama de cours** présenté lors de l'école d'été CIST2022 offre un résumé synthétique des propriétés des trois types d'analyse factorielle (ACP, AFC, ACM) et peut soit servir de préalable à l'ensemble des cours et exercices, soit être mobilisé en conclusion pour effectuer une synthèse des connaissances acquises.
+
+### Pour aller plus loin
+
+Les principaux ouvrages de statistiques (indépendamment du langage de programmation utilisé) utilisées dans le cadre de ce cours sont ceux de @denis2020, @dumolard2011donnees, @Etoudji2015,@lebart1995statistique, @sanders1989, @johnson2007. Il est évidemment recommandé de se reporter à ces ouvrages pour dépasser le stade de la simple initiation et comprendre plus en détail les méthodes présentées.
+
+Pour la mise en oeuvre de ces méthodes sous R, nous recommandons en priorité la lecture des chapitres 7 (*Analyses Factorielles*) et 8 (*Classifications*) de l'ouvrage "*R pour la statistique et la sciences des données"* de @husson2018r qui a été remis à tous les participants de l'école d'été CIST 2021-2022. Il s'agit d'un résumé d'un ouvrage plus complet des mêmes auteurs intitulé"*Analyse de données avec R"* de @husson2016analyse qui pourra être lu dans deuxième temps pour approfondir certains aspects. Plusieurs des auteurs de ces deux ouvrages font partie de l'équipe de développement de deux packages R de référence pour l'analyse multidimensionnelle des données :
+
+-   [FactoMineR :](http://factominer.free.fr/index_fr.html) Le package R *FactoMineR* @Factominer constitue une référence pour l'analyse des données. Son site web comporte également des éléments de cours très précieux et des exemples. Le tout en français !!!
+-   [Factoshiny :](http://factominer.free.fr/graphs/factoshiny-fr.html) Développé par les auteurs du package précédent, le package R FactoShiny @Factoshiny offre des possibilités d'analyse interactive des données permettant aux utilisateurs peu familiers du langage R de travailler à la souris. Il offre la possibilité de générer des rapports complets d'analyse des résultats d'une analyse factorielle ou d'une classification.
+
+
+Le [MOOC Analyse des données](https://husson.github.io/MOOC_AnaDo/index.html) de [François Husson](https://husson.github.io/index.html) est le complément logique des ouvrages précédents et des packages proposés. Il comporte une série de vidéos détaillées présentant de façon détaillée l'ensemble des outils vus dans le cadre de ce cours et précise leur mise en oeuvre sous R. Et bien d'autres choses ...
+
+```{r}
+include_graphics("img/husson.png")
+```

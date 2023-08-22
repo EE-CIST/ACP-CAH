@@ -3,26 +3,26 @@ project:
   output-dir: docs
 
 render:
-      - index.qmd
-      - Cours-AFC.qmd
-      - Cours-ACM.qmd      
-      - Cours-ACP.qmd
-      - Cours-CAH.qmd
-      - Exo-CEDEAO.qmd
-      - Exo-AFRIQUE.qmd
+      - EXP3-Cours1-Intro.qmd
+      - EXP3-Cours2-ACP.qmd
+      - EXP3-Cours3-CAH.qmd       
+      - EXP3-Exo1-ACP.qmd
+      - EXP3-Exo2-AFC.qmd
+      - EXP3-EXO3-ACM.qmd
+
 
 website:
-  title: "EXP3 : Stat. Multivariée"
+  title: "EXP3 : Statistique multivariée"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - Cours-AFC.qmd
-      - Cours-ACM.qmd       
-      - Cours-ACP.qmd
-      - Cours-CAH.qmd
-      - Exo-CEDEAO.qmd
-      - Exo-AFRIQUE.qmd
+      - EXP3-Cours1-Intro.qmd
+      - EXP3-Cours2-ACP.qmd
+      - EXP3-Cours3-CAH.qmd      
+      - EXP3-Exo1-ACP.qmd
+      - EXP3-Exo2-AFC.qmd
+      - EXP3-EXO3-ACM.qmd
 
 format:
   html:
