@@ -8,7 +8,7 @@ render:
       - EXP3-Cours3-CAH.qmd       
       - EXP3-Exo1-ACP.qmd
       - EXP3-Exo2-AFC.qmd
-      - EXP3-EXO3-ACM.qmd
+      - EXP3-Exo3-ACM.qmd
 
 
 website:
@@ -22,7 +22,7 @@ website:
       - EXP3-Cours3-CAH.qmd      
       - EXP3-Exo1-ACP.qmd
       - EXP3-Exo2-AFC.qmd
-      - EXP3-EXO3-ACM.qmd
+      - EXP3-Exo3-ACM.qmd
 
 format:
   html:
