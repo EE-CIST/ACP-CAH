@@ -20,15 +20,15 @@ library(FactoMineR)
 Le but de cet exercice est :
 
 1.  De montrer les commandes R permettant de réaliser une Analayse Factorielle des Correspondances (AFC) sous R
-2.  D'apprendre à interpréter les résultats de cette AFC
-3.  De compléter l'analyse par une Classification Ascendante Hiérarchique sur les axes de l'AFC.
+2.  D'apprendre à commenter les résultats de cette AFC
+
 
 En préalable à cet exercice il est indispensable d'avoir bien maîtrisé les fondements théoriques des deux méthodes d'AFC et de CAH en métrique du chi-2. Ces enseignements n'étant pas détaillés sur le présent site, nous recommandons de se reporter au MOOC de cours de François Husson en suivant les liens suivants
 
 -   [Cours sur l'AFC](https://husson.github.io/MOOC_AnaDo/AFC.html)
 -   [Cours sur la classification](https://husson.github.io/MOOC_AnaDo/classif.html)
 
-## DONNEES
+## Données
 
 On charge le tableau de données "LAN-BENIN-2002-NIV1.csv" décrivant pour chacun des 12 départements du Bénin le nombre de personnes parlant une langue ou un groupe de langues en 2002. Les chiffres sont exprimés en milliers et les valeurs arrondies.
 
@@ -149,14 +149,17 @@ Les instructions suivantes donnent pour les trois premiers axes les coordonnées
 coo_1<-afc$col$coord[,1]
 coo_2<-afc$col$coord[,2]
 coo_3<-afc$col$coord[,3]
+coo_4<-afc$col$coord[,4]
 ctr_1<-afc$col$contrib[,1]
 ctr_2<-afc$col$contrib[,2]
 ctr_3<-afc$col$contrib[,3]
+ctr_4<-afc$col$contrib[,4]
 cos2_1<-afc$col$cos2[,1]
 cos2_2<-afc$col$cos2[,2]
 cos2_3<-afc$col$cos2[,3]
+cos2_4<-afc$col$cos2[,4]
 
-df<-data.frame(coo_1,ctr_1,cos2_1,coo_2,ctr_2,cos2_2,coo_3,ctr_3,cos2_3)
+df<-data.frame(coo_1,ctr_1,cos2_1,coo_2,ctr_2,cos2_2,coo_3,ctr_3,cos2_3, coo_4, ctr_4,cos2_4)
 kable(df,digits = 2,
       caption = "Relations entre colonnes et facteurs"
       )
@@ -170,14 +173,17 @@ En AFC, les lignes et les colonnes jouent un rôle équivalent. Les sorties pour
 coo_1<-afc$row$coord[,1]
 coo_2<-afc$row$coord[,2]
 coo_3<-afc$row$coord[,3]
+coo_4<-afc$row$coord[,4]
 ctr_1<-afc$row$contrib[,1]
 ctr_2<-afc$row$contrib[,2]
 ctr_3<-afc$row$contrib[,3]
+ctr_4<-afc$row$contrib[,4]
 cos2_1<-afc$row$cos2[,1]
 cos2_2<-afc$row$cos2[,2]
 cos2_3<-afc$row$cos2[,3]
+cos2_4<-afc$row$cos2[,4]
 
-df<-data.frame(coo_1,ctr_1,cos2_1,coo_2,ctr_2,cos2_2,coo_3,ctr_3,cos2_3)
+df<-data.frame(coo_1,ctr_1,cos2_1,coo_2,ctr_2,cos2_2,coo_3,ctr_3,cos2_3, coo_4, ctr_4,cos2_4)
 kable(df,digits = 2,
       caption = "Relations entre lignes et facteurs"
       )
@@ -195,12 +201,12 @@ plot.CA(afc)
 - **Commentaire : ** ...
 
 
-### Commentaire des axes 1 et 3
+### Commentaire des axes 3 et 4
 
-Que pensez-vous des informations supplémentaires approtées par l'axe 3 ?
+Que pensez-vous des informations supplémentaires apportées par les axes 3 et 4 ?
 
 ```{r, warning=F}
-plot.CA(afc,axes = c(1,3))
+plot.CA(afc,axes = c(3,4))
 ```
 
 - **Commentaire : ** ...
